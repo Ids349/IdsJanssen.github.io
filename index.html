@@ -1,14 +1,57 @@
-<h1>Klikspel</h1>
-<p>Klik op de knop om punten te scoren:</p>
-<button id="klikButton">Klik hier</button>
-<p id="score">Score: 0</p>
-<script>
-let score = 0;
-const klikButton = document.getElementById("klikButton");
-const scoreDisplay = document.getElementById("score");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Clicker Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #score {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    #timer {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+    <h1>Simple Clicker Game</h1>
+    <div id="score">Score: 0</div>
+    <div id="timer">Time Left: 10 seconds</div>
+    <button id="clickButton">Click Me!</button>
 
-klikButton.addEventListener("click", function() {
-  score++;
-  scoreDisplay.innerHTML = "Score: " + score;
-});
-</script>
+    <script>
+        let score = 0;
+        let timeLeft = 10;
+        let timerInterval;
+
+        document.getElementById('clickButton').addEventListener('click', () => {
+            score++;
+            document.getElementById('score').innerText = 'Score: ' + score;
+        });
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = 'Time Left: ' + timeLeft + ' seconds';
+                if (timeLeft === 0) {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            document.getElementById('clickButton').setAttribute('disabled', true);
+            alert('Time\'s up! Your final score is: ' + score);
+        }
+
+        startTimer();
+    </script>
+</body>
+</html>
